@@ -1,11 +1,38 @@
-from flask import Flask, render_template, request, redirect, send_file, url_for
+from flask import Flask, render_template, request, redirect, flash, send_file
+import urllib.parse
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = "a2be6bd94f130e27cb79b384"
 
 @app.route("/")
 def homepage():
     return render_template("index.html")
 
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404
+@app.route("/live_python")
+def live_python():
+    return render_template("pyscript.html")
+
+@app.route("/whatsapp_sender", methods=("POST","GET"))
+def whatsapp_sender():
+    if request.method == "POST":
+        tmp_link = "https://wa.me/39" + request.form["numero"] + "?"
+        tmp_testo = urllib.parse.quote(request.form["testo_messaggio"])
+        tmp_link = tmp_link + "text=" + tmp_testo
+        try:
+            int(request.form["numero"])
+            return redirect(tmp_link)
+        except:
+            flash("Ehi, non hai inserito un numero!")
+    return render_template("whatsapp.html")
+
+@app.route("/password_generator")
+def password_generator():
+    return render_template("password_generator.html")
+
+@app.route("/aggiorna_debian.sh")
+def aggiorna_debian():
+    return send_file("/home/calminaro/mysite/static/auto_aggiorna.sh")
+
+@app.route("/hash.py")
+def hash():
+    return send_file("/home/calminaro/mysite/static/hash.py")
