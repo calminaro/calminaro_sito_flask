@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request, redirect, flash, send_file
 import urllib.parse
+import json
+
+with open("credenziali.json", "r") as f:
+    cr = json.load(f)
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "a2be6bd94f130e27cb79b384"
+app.config['SECRET_KEY'] = cr["secret_key"]
 
 @app.route("/")
 def homepage():
@@ -36,3 +40,6 @@ def aggiorna_debian():
 @app.route("/hash.py")
 def hash():
     return send_file("/home/calminaro/mysite/static/hash.py")
+
+if __name__ == "__main__":
+    app.run(port=8000, host="0.0.0.0")
