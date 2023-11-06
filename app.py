@@ -1,5 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash, send_file
-import urllib.parse
+from flask import Flask, render_template, send_file
 import json
 
 with open("credenziali.json", "r") as f:
@@ -16,17 +15,8 @@ def homepage():
 def live_python():
     return render_template("pyscript.html")
 
-@app.route("/whatsapp_sender", methods=("POST","GET"))
+@app.route("/whatsapp_sender")
 def whatsapp_sender():
-    if request.method == "POST":
-        tmp_link = "https://wa.me/39" + request.form["numero"] + "?"
-        tmp_testo = urllib.parse.quote(request.form["testo_messaggio"])
-        tmp_link = tmp_link + "text=" + tmp_testo
-        try:
-            int(request.form["numero"])
-            return redirect(tmp_link)
-        except:
-            flash("Ehi, non hai inserito un numero!")
     return render_template("whatsapp.html")
 
 @app.route("/password_generator")
