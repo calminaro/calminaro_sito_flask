@@ -1,3 +1,5 @@
+LABEL org.opencontainers.image.source https://github.com/calminaro/calminaro_sito_flask
+
 FROM python
 
 WORKDIR /flask_app
@@ -11,4 +13,4 @@ COPY ./credenziali.json ./credenziali.json
 COPY ./templates ./templates
 COPY ./static ./static
 
-CMD ["gunicorn",  "-w 4", "-b 0.0.0.0",  "app:app"]
+CMD ["gunicorn",  "-w 3", "-b 0.0.0.0",  "app:app"]
