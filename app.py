@@ -32,4 +32,5 @@ def hash():
     return send_file("/home/calminaro/mysite/static/hash.py")
 
 if __name__ == "__main__":
+    #Porta specificata per Docker
     app.run(port=8000, host="0.0.0.0")
