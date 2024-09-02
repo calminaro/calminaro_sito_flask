@@ -1,3 +1,4 @@
 credenziali.json
 *.db
 __pycache__
+venv
